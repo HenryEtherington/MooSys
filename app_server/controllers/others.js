@@ -1,7 +1,7 @@
-/* GET home page */
+/* GET about page */
 const about = function(req, res){
   res.render('generic-text', {
-    title: 'About MooSys.\nMooSys is a movie review website. Angular was used to display the home page.'
+    title: 'About MooSys.\nMooSys is a movie review website. Angular was used to display the home page.\nThe mongodb database is connected to the information page.'
 
   });
 };
