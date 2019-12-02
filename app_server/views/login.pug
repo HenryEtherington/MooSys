@@ -1,0 +1,16 @@
+extends layout
+block content
+ .container
+  .login-dark
+    form(method='post')
+        h2.sr-only Login Form
+        .illustration
+            i.icon.ion-ios-locked-outline
+        .form-group
+            input.form-control(type='email' name='email' placeholder='Email')
+        .form-group
+            input.form-control(type='password' name='password' placeholder='Password')
+        .form-group
+        <a href="/">Login</a>
+        br
+        <a href="/">Forgot your email or password?</a>

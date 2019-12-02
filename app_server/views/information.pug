@@ -1,0 +1,41 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.banner
+    .col-12
+      h1= "MooSys"
+  .row
+    .col-12.col-md-8
+      .error= message
+
+
+
+      each location in locations
+        .card
+          .card-block
+            h4
+
+              a(href=`/location/review/new`)= location.movie
+              p.title= location.title
+              small &nbsp;
+                +outputRating(location.rating)
+                span.badge.badge-pill.badge-default.float-right= location.distance
+            p.synopsis= location.synopsis
+
+            .footer-legal
+            .float-md-right.region
+            .d-inline-block.copyright
+              p.d-inline-block
+          .video-container
+
+           #YouTube would not allow direct link to page via  src='https://www.youtube.com/embed/location.movie
+            if(location.youtubeLink == "WHXxVmeGQUc")
+                iframe(allowfullscreen='' frameborder='0' src='https://www.youtube.com/embed/WHXxVmeGQUc?loop=1&amp;playlist=WHXxVmeGQUc' width='853' height='480')
+
+            if (location.youtubeLink == "_K69neKGZlM")
+                iframe(allowfullscreen='' frameborder='0' src='https://www.youtube.com/embed/_K69neKGZlM?loop=1&amp;playlist=_K69neKGZlM' width='853' height='480')
+
+            if (location.youtubeLink == "vf1aW1z437I")
+                 iframe(allowfullscreen='' frameborder='0' src='https://www.youtube.com/embed/vf1aW1z437I?loop=1&amp;playlist=vf1aW1z437I' width='853' height='480')

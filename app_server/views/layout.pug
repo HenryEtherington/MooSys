@@ -1,0 +1,73 @@
+
+doctype html
+head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title MooReviews
+    link(rel='stylesheet' href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Cookie')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lora')
+    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway')
+    link(rel='stylesheet' href='/fonts/fontawesome-all.min.css')
+    link(rel='stylesheet' href='/fonts/font-awesome.min.css')
+    link(rel='stylesheet' href='/fonts/ionicons.min.css')
+    link(rel='stylesheet' href='/fonts/fontawesome5-overrides.min.css')
+    link(rel='stylesheet' href='/stylesheets/Header-Blue.css')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel='stylesheet' href='/stylesheets/Footer-with-social-media-icons.css')
+    link(rel='stylesheet' href='/stylesheets/Video-Responsive-YouTube.css')
+div
+    .header-blue
+        nav.navbar.navbar-light.navbar-expand-md.navigation-clean-search
+            .container-fluid
+                img(src='/img/cow.png' style='width:200px;height: 70px;')
+                a.navbar-brand(href='/') Moo Reviews
+
+                button.navbar-toggler(data-toggle='collapse' data-target='#navcol-1')
+                    span.sr-only Toggle navigation
+                    span.navbar-toggler-icon
+                #navcol-1.collapse.navbar-collapse
+                    ul.nav.navbar-nav
+                    a.nav-link(href='/information') Information
+                    a.nav-link(href='/about') About
+                    form.form-inline.mr-auto(target='_self')
+                        .form-group
+                    span.navbar-text
+                        a.login(href='/login') Log In
+                    a.btn.btn-light.action-button(role='button' href='/register') Sign Up
+    block content
+    footer.page-footer(style='width: 730px;margin: 0px;padding: 0px;')
+        .container
+            hr
+.col-lg-10.col-xl-8.offset-lg-1.offset-xl-2
+    .intro
+    .text
+        figure
+footer#footerpad
+    .col-md-6.col-lg-8.mx-auto
+        ul.list-inline.text-center
+            li.list-inline-item
+                a(href='#')
+                    span.fa-stack.fa-lg
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-facebook.fa-stack-1x.fa-inverse
+            li.list-inline-item
+                a(href='#')
+                    span.fa-stack.fa-lg
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-twitter.fa-stack-1x.fa-inverse
+            li.list-inline-item
+                a(href='#')
+                    span.fa-stack.fa-lg
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-instagram.fa-stack-1x.fa-inverse
+            li.list-inline-item
+                a(href='#')
+                    span.fa-stack.fa-lg
+                        i.fa.fa-circle.fa-stack-2x
+                        i.fa.fa-pinterest.fa-stack-1x.fa-inverse
+        p.copyright.text-muted.text-center Copyright &copy; Moo Reviews 2019 | Web Design by Henry Etherington
+script(src='/javascripts/jquery.min.js')
+script(src='/javascripts/bootstrap.min.js')
+
+block scripts

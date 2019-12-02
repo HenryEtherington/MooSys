@@ -1,0 +1,36 @@
+@import url("//fonts.googleapis.com/css?family=SansSefif|Cabin:400,700");
+
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Georgia', cursive;
+}
+
+.navbar-brand {
+  font-family: 'Cabin', cursive;
+}
+
+legend {
+  font-family: 'Cabin', cursive;
+}
+
+body {
+  font-family: "Cabin", Arial, sans-serif;
+  color: #000000;
+  background-color: #ffffff;
+
+}
+
+.card {
+
+  text-align: center;
+}
+
+.card.card-primary {
+
+  background-color: gray;
+}
+
+.card {
+
+  color: black;
+}

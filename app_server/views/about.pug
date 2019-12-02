@@ -1,0 +1,32 @@
+extends layout
+
+
+include _includes/sharedHTMLfunctions
+
+ .row
+  .col-12.col-md-8
+  .error= message
+  app-home-list Loading
+
+
+
+block content
+  .row.banner
+    .col-12
+      h1= MooSys
+
+  .row
+    .col-12.col-md-8
+      .error= message
+
+      app-home-list Loading
+
+    .col-12.col-md-4
+      p.lead= sidebar
+block scripts
+      script(src='/mooSys/app_public/build/runtime-es2015.edb2fcf2778e7bf1d426.js')
+      script(src='/mooSys/app_public/build/runtime-es5.edb2fcf2778e7bf1d426.js')
+      script(src='/mooSys/app_public/build/polyfills-es2015.2987770fde9daa1d8a2e.js')
+      script(src='/mooSys/app_public/build/polyfills-es5.2987770fde9daa1d8a2e.js')
+      script(src='/mooSys/app_public/build/main-es5.ff08b7f60b8a08bc3181.js')
+      script(src='/mooSys/app_public/build/main-es2015.ff08b7f60b8a08bc3181.js')

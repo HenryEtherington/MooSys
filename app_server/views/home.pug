@@ -1,0 +1,41 @@
+extends layout
+
+include _includes/sharedHTMLfunctions
+
+block content
+  .row.banner
+    .col-12
+      h1= pageHeader.title
+        small &nbsp;#{pageHeader.strapline}
+  .row
+    .col-12.col-md-8
+      .error= message
+
+
+
+      each location in locations
+        .card
+          .card-block
+            h4
+
+
+              a(href=`/location/${location._id}`)= location.movie
+              p.title= location.title
+              small &nbsp;
+                +outputRating(location.rating)
+              //span.badge.badge-pill.badge-default.float-right= location.distance
+            p.synopsis= location.synopsis
+
+            .footer-legal
+            .float-md-right.region
+            .d-inline-block.copyright
+              p.d-inline-block
+          .video-container
+
+            if (location.youtubeLink == "_K69neKGZlM")
+
+                  iframe(allowfullscreen='' frameborder='0' src='https://www.youtube.com/embed/_K69neKGZlM' width='853' height='480')
+
+
+    .col-12.col-md-4
+      p.lead= sidebar
