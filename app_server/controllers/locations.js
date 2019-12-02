@@ -1,12 +1,9 @@
 const request = require('request');
 const apiOptions = {
-  server : 'http://localhost:3000'
-};
+  server : 'http://localhost:3000'};
 if (process.env.NODE_ENV === 'production') {
-  apiOptions.server = '';
+  apiOptions.server = 'https://moo-reviews.herokuapp.com/';
 }
-
-// PUBLIC EXPOSED METHODS
 
 /* GET 'home' page */
 const homelist = function(req, res){
@@ -32,7 +29,12 @@ const homelist = function(req, res){
           data[i].distance = _formatDistance(data[i].distance);
         }
       }
+    try {
       _renderHomepage(req, res, data);
+    }
+          catch {
+            _showError(req, res, response.statusCode);
+          }
     }
   );
 };
@@ -61,82 +63,35 @@ const informationlist = function(req, res){
           data[i].distance = _formatDistance(data[i].distance);
         }
       }
-      _renderInformationPage(req, res, data);
+    try {
+       _renderInformationPage(req, res, data);7
+    }
+          catch {
+            _showError(req, res, response.statusCode);
+          }
     }
   );
 };
 
-/* GET 'Location info' page */
-const locationInfo = function(req, res){
-  _getLocationInfo(req, res, (req, res, responseData) => {
-    console.log(responseData);
-    _renderDetailPage(req, res, responseData);
-  });
+const _isNumeric = function (n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
 
-  /* GET 'Add review' page */
-  const addReview = function(req, res){
-    res.render('location-review-form', {
-      title: 'Review Starcups on MooSys',
-      pageHeader: { title: 'Review movie' }
-    });
-  };
-
-const doAddReview = function(req, res) {
-  const locationid = req.params.locationid;
-  const path = `/api/locations/${locationid}/reviews`;
-  const postdata = {
-    author: req.body.movie,
-    rating: parseInt(req.body.rating, 10),
-    reviewText: req.body.review
-  };
-  const requestOptions = {
-    url : apiOptions.server + path,
-    method : 'POST',
-    json : postdata
-  };
-  if (!postdata.author || !postdata.rating || !postdata.reviewText) {
-    res.redirect(`/location/${locationid}/review/new?err=val`);
+const _formatDistance = function (distance) {
+  if (distance && _isNumeric(distance)) {
+    let thisDistance = 0;
+    let unit = 'm';
+    if (distance > 1000) {
+      thisDistance = parseFloat(distance / 1000).toFixed(1);
+      unit = 'km';
+    } else {
+      thisDistance = Math.floor(distance);
+    }
+    return thisDistance + unit;
   } else {
-    request(
-      requestOptions,
-      (err, response, body) => {
-        if (response.statusCode === 201) {
-          res.redirect(`/location/${locationid}`);
-        } else if (response.statusCode === 400 && body.movie && body.movie === 'ValidationError' ) {
-          res.redirect(`/location/${locationid}/review/new?err=val`);
-        } else {
-          _showError(req, res, response.statusCode);
-        }
-      }
-    );
+    return '?';
   }
-};
-
-// PRIVATE METHODS
-const _getLocationInfo = function(req, res, callback) {
-  const path = `/api/locations/${req.params.locationid}`;
-  const requestOptions = {
-    url : apiOptions.server + path,
-    method : 'GET',
-    json : {}
-  };
-  request(
-    requestOptions,
-    (err, response, body) => {
-      let data = body;
-      if (response.statusCode === 200) {
-        data.coords = {
-          lng : body.coords[0],
-          lat : body.coords[1]
-        };
-        callback(req, res, data);
-      } else {
-        _showError(req, res, response.statusCode);
-      }
-    }
-  );
 };
 
 const _renderHomepage = function(req, res, responseBody){
@@ -181,46 +136,98 @@ const _renderInformationPage = function(req, res, responseBody){
   });
 };
 
-const _renderDetailPage = function(req, res, locDetail) {
-  res.render('location-info', {
-    title: locDetail.movie,
-    pageHeader: {
-      title: locDetail.movie
-    },
-    sidebar: {
-      context: 'is on MooSys because it is great for finding movie reviews.',
-      callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
-    },
-    location: locDetail
+/*const locationInfo = function(req, res){
+  const path = `/api/locations/${req.params.locationid}`;
+  requestOptions = {
+    url : apiOptions.server + path,
+    method : 'GET',
+    json : {}
+  };
+  request(requestOptions,(err, response, body) => {
+    let data = body;
+    data.coords = {
+      lng : body.coords[0],
+      lat : body.coords[1]
+    };
+
+        _renderDetailPage(req, res, data);
+      }
+  );
+};*/
+const doAddReview = function(req, res){
+  const locationid = req.params.locationid;
+  const path = `/api/locations/${locationid}/reviews`;
+  const postdata = {
+    author: req.body.name,
+    rating: req.body.rating,
+    reviewText: req.body.review
+  };
+  const requestOptions = {
+    url : apiOptions.server + path,
+    method : 'POST',
+    json : postdata
+  };
+  request( requestOptions,(err, response, body) => {
+        if (response.statusCode === 201) {
+          res.redirect(`/location/${locationid}`);
+        } else {
+          _showError(req, res, response.statusCode);
+        }
+      }
+  );
+};
+
+
+
+const _renderReviewForm = function (req, res, locDetail) {
+  try {res.render('location-review-form', {
+    title: `Review ${locDetail.movie} on Loc8r`,
+    pageHeader: { title: `Review ${locDetail.movie}` }
   });
-};
-
-const _renderReviewForm = function(req, res, locDetail) {
-  res.render('location-review-form', {
-    title: `Review ${locDetail.movie} on MooSys`,
-    pageHeader: { title: `Review ${locDetail.movie}` },
-    error: req.query.err
-  });
-};
-
-const _isNumeric = function (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-const _formatDistance = function (distance) {
-  if (distance && _isNumeric(distance)) {
-    let thisDistance = 0;
-    let unit = 'm';
-    if (distance > 1000) {
-      thisDistance = parseFloat(distance / 1000).toFixed(1);
-      unit = 'km';
-    } else {
-      thisDistance = Math.floor(distance);
-    }
-    return thisDistance + unit;
-  } else {
-    return '?';
+} catch{
+    _showError(req, res, response.statusCode);
   }
+};
+
+/* GET 'Add review' page */
+
+const _getLocationInfo = function (req, res, callback) {
+  const path = `/api/locations/${req.params.locationid}`;
+  const requestOptions = {
+    url : apiOptions.server + path,
+    method : 'GET',
+    json : {}
+  };
+  request(requestOptions,(err, response, body) => {
+        let data = body;
+        if (response.statusCode === 200) {
+          data.coords = {
+            lng : body.coords[0],
+            lat : body.coords[1]
+          };
+          callback(req, res, data);
+        } else {
+          _showError(req, res, response.statusCode);
+        }
+      }
+  );
+};
+const locationInfo = function(req, res){
+  _getLocationInfo(req, res, (req, res, responseData) => {
+    try {
+      _renderDetailPage(req, res, responseData);
+    }
+
+    catch {
+      _showError(req, res, response.statusCode);
+    }
+  });
+};
+const addReview = function(req, res){
+  res.render('location-review-form', {
+    title: 'Review Starcups on MooSys',
+    pageHeader: { title: 'Review movie' }
+  });
 };
 
 const _showError = function (req, res, status) {
@@ -242,10 +249,13 @@ const _showError = function (req, res, status) {
 
 
 
+
+/* GET 'Add review' page */
 module.exports = {
   homelist,
   informationlist,
   locationInfo,
+  doAddReview,
   addReview,
-  doAddReview
+  _showError
 };
