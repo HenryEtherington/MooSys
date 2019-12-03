@@ -192,7 +192,7 @@ const _renderReviewForm = function (req, res, locDetail) {
 /* GET 'Add review' page */
 
 const _getLocationInfo = function (req, res, callback) {
-  const path = `/api/locations/${req.params.locationid}`;
+  const path = `/api/location/${req.params.locationid}`;
   const requestOptions = {
     url : apiOptions.server + path,
     method : 'GET',
