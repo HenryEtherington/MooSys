@@ -17,7 +17,7 @@ block content
           .card-block
             h4
 
-              a(href=`/location/review/new`)= location.movie
+              a(href=`/location/${location._id}`)= location.movie
               p.title= location.title
               small &nbsp;
                 +outputRating(location.rating)
