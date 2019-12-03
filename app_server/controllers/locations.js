@@ -214,13 +214,7 @@ const _getLocationInfo = function (req, res, callback) {
 };
 const locationInfo = function(req, res){
   _getLocationInfo(req, res, (req, res, responseData) => {
-    try {
       _renderDetailPage(req, res, responseData);
-    }
-
-    catch {
-      _showError(req, res, response.statusCode);
-    }
   });
 };
 const addReview = function(req, res){
