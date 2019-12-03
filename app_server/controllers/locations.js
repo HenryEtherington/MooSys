@@ -136,7 +136,7 @@ const _renderInformationPage = function(req, res, responseBody){
   });
 };
 
-const locationInfo = function(req, res){
+/*const locationInfo = function(req, res){
   const path = `/api/locations/${req.params.locationid}`;
   requestOptions = {
     url : apiOptions.server + path,
@@ -153,7 +153,7 @@ const locationInfo = function(req, res){
         _renderDetailPage(req, res, data);
       }
   );
-};
+};*/
 const doAddReview = function(req, res){
   const locationid = req.params.locationid;
   const path = `/api/locations/${locationid}/reviews`;
